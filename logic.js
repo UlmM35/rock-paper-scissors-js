@@ -10,18 +10,35 @@ function getComputerChoice() {
     }
 }
 
-
-function getHumanChoice() {
-    const choice = prompt("Choose rock, paper or scissors: ");
-
-    return choice;
-}
-
-
 function playGame() {
 
     let humanScore = 0;
     let computerScore = 0;
+
+    const buttons = document.querySelector("#button-container");
+    let result = document.querySelector("#results");
+    result.textContent = "Score: 0 - 0";
+
+    buttons.addEventListener("click", (event) => {
+        let target = event.target;
+
+        if (target.id === "rock") {
+            playRound("rock", getComputerChoice());
+        } else if (target.id === "paper") {
+            playRound("paper", getComputerChoice());
+        } else if (target.id == "scissors") {
+            playRound("scissors", getComputerChoice());
+        }
+
+        result.textContent = "Score: " + humanScore + " - " + computerScore;
+
+        if (humanScore >= 5) {
+            result.textContent = "You win!";
+        } else if (computerScore >= 5) {
+            result.textContent = "You lose!";
+        }
+
+    });
 
     function playRound(humanChoice, computerChoice) {
         const humanChoiceLower = humanChoice.toLowerCase();
@@ -49,12 +66,6 @@ function playGame() {
         } else {
             console.log("Something went wrong.")
         }
-    }
-
-    for (let i = 0; i < 5; i++) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        playRound(humanSelection, computerSelection);
     }
 }
 
